@@ -1,0 +1,2 @@
+cd /d "C:\Users\1\Downloads\Compressed\DriverInjectDll-master" &msbuild "driver_inject.vcxproj" /t:sdvViewer /p:configuration="Win7 Release" /p:platform="x64" /p:SolutionDir="C:\Users\1\Downloads\Compressed\DriverInjectDll-master" 
+exit %errorlevel% 

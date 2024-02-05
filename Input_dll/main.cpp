@@ -1,4 +1,4 @@
-#include <windows.h>
+﻿#include <windows.h>
 #include <iostream>
 #include <devioctl.h>
 
@@ -90,7 +90,7 @@ int main()
 		goto __exit;
 	}
 
-	result = DeviceIoControl(
+	result = DeviceIoControl( // 传入 MyDll_x86.dll
 		hDevice,
 		IOCTL_SET_INJECT_X86DLL,
 		dllx86Ptr,
@@ -102,7 +102,7 @@ int main()
 
 	std::cout << (result ? "ok x86dll" : "fail x86dll") << std::endl;
 
-	result = DeviceIoControl(
+	result = DeviceIoControl( // 传入 MyDll_x64.dll
 		hDevice,
 		IOCTL_SET_INJECT_X64DLL,
 		dllx64Ptr,
