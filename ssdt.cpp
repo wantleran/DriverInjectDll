@@ -59,11 +59,16 @@ static SSDTStruct* SSDTfind()
 		// 遍历内核数据,寻找特征码的位置
 		for (KiSSSOffset = 0; KiSSSOffset < kernelSize - signatureSize; KiSSSOffset++)
 		{
-			if (RtlCompareMemory(((unsigned char*)kernelBase + KiSSSOffset), KiSystemServiceStartPattern, signatureSize) == signatureSize)
+			unsigned char* address = ((unsigned char*)kernelBase + KiSSSOffset);
+			if (MmIsAddressValid(address)) //  Fix Bugs: 这里需要使用 MmIsAddressValid 函数判断 address 是否为有效地址,否则 Win10 19045 运行蓝屏
 			{
-				found = true;
-				break;
+				if (RtlCompareMemory(address, KiSystemServiceStartPattern, signatureSize) == signatureSize)
+				{
+					found = true;
+					break;
+				}
 			}
+
 		}
 		if (!found)
 			return NULL;
@@ -304,4 +309,4 @@ void SSDT::Unhook(HOOK hHook, bool free)
 	if (free)
 		RtlFreeMemory(hHook);
 #endif
-}
+	}
